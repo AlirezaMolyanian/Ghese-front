@@ -5,7 +5,7 @@ export interface Message {
   timestamp: Date;
   voiceUrl?: string;
   duration?: number;
-  isPlaying?: boolean;
+  transcript?: string;
 }
 
 export interface VoiceMessage {
@@ -13,4 +13,25 @@ export interface VoiceMessage {
   audioUrl: string;
   duration: number;
   transcript?: string;
+}
+
+export interface ChatRequest {
+  message: string;
+  userId: string;
+  timestamp: string;
+}
+
+export interface VoiceRequest {
+  audio: string; // Base64 encoded audio
+  format: string;
+  duration: number;
+  userId: string;
+  timestamp: string;
+}
+
+export interface ApiResponse {
+  success: boolean;
+  reply: string;
+  transcript?: string;
+  error?: string;
 }

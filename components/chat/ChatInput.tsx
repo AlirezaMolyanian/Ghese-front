@@ -54,25 +54,6 @@ export default function ChatInput({
     }
   };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    e.preventDefault();
-    handleMouseDown();
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    e.preventDefault();
-    handleMouseUp();
-  };
-
-  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
-    
-    // Auto-resize textarea
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 120)}px`;
-    }
-  };
 
   return (
     <div className="flex items-end space-x-3">
@@ -81,29 +62,17 @@ export default function ChatInput({
         <textarea
           ref={textareaRef}
           value={message}
-          onChange={handleTextareaChange}
           onKeyDown={handleKeyDown}
           placeholder="Type your message here..."
           disabled={disabled || isRecording}
           className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none min-h-[48px] max-h-[120px] disabled:opacity-50"
           rows={1}
         />
-        
-        {/* Attachment Button */}
-        <button 
-          className="absolute left-3 bottom-3 text-gray-400 hover:text-gray-600 disabled:opacity-50"
-          disabled={disabled || isRecording}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-          </svg>
-        </button>
       </div>
 
-      {/* Send/Record Buttons */}
+      {/* Action Buttons */}
       <div className="flex items-center space-x-2">
         {message.trim() ? (
-          // Send Button (when text exists)
           <button
             onClick={handleSubmit}
             disabled={disabled || isRecording}
@@ -119,8 +88,6 @@ export default function ChatInput({
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
             disabled={disabled || isRecording}
             className={`p-3 rounded-xl transition-all duration-300 shadow-md ${
               isHoldingMic 
